@@ -7,7 +7,7 @@ const resolvers = {
         me: async (parent, args, context) => {
             // Are we logged in?
             if ( context.user ) {
-                const userData = await User.findOne( { _id: context.user._id } ).select('-__v-password');
+                const userData = await User.findOne( { _id: context.user._id } ).select('-__v -password');
 
                 return userData;
             }
@@ -15,14 +15,34 @@ const resolvers = {
         }
     },
 
-    Mutation {
-        addUser: {},
+    Mutation: {
+        /** (parent, args, context) */
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToke(user);
 
-        login: {},
+            return { token, user};
+        },
 
-        saveBook: {},
+        login: async (parent, { email, password } )=> {
+            const user = await User.findOne({email});
 
-        removeBook: {}
+            if (!user) {
+                throw new AuthenticationError('Incorrect email.');
+            };
+
+            const correctPassword = await user.isCorrectPassword(password);
+
+            if (!correctPassword) throw new AuthenticationError('Incorrect Password.');
+
+            const token = signToken(user);
+
+            return {token, user};
+        },
+
+        // saveBook: {},
+
+        // removeBook: {}
     }
 };
 
