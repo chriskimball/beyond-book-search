@@ -17,9 +17,9 @@ const resolvers = {
 
     Mutation: {
         /** (parent, args, context) */
-        addUser: async (parent, args) => {
+        createUser: async (parent, args) => {
             const user = await User.create(args);
-            const token = signToke(user);
+            const token = signToken(user);
 
             return { token, user};
         },
@@ -42,7 +42,7 @@ const resolvers = {
 
         // saveBook: {},
 
-        // removeBook: {}
+        // deleteBook: {}
     }
 };
 
