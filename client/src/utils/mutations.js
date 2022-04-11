@@ -24,6 +24,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
+// TODO:
 // export const SAVE_BOOK = gql`
 //   mutation saveBook($bookData: String!) {
 //     addThought(thoughtText: $thoughtText) {
@@ -39,14 +40,15 @@ export const LOGIN_USER = gql`
 //   }
 // `;
 
-// export const DELETE_BOOK = gql`
-//   mutation createVote($_id: String!, $techNum: Int!) {
-//     createVote(_id: $_id, techNum: $techNum) {
-//       _id
-//       tech1
-//       tech2
-//       tech1_votes
-//       tech2_votes
-//     }
-//   }
-// `;
+export const DELETE_BOOK = gql`
+  mutation deleteBook($bookId: String!) {
+    deleteBook(bookId: $bookId) {
+      bookId
+      authors
+      description
+      title
+      image
+      link
+    }
+  }
+`;
