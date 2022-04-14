@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
-
+// https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+// https://stackoverflow.com/questions/42182577/is-it-possible-to-use-dotenv-in-a-react-project 
+require('dotenv').config();
 // set token secret and expiration date
-const secret = 'superdupersecretlol';
+const secret = process.env.JWT_SECRET;
 const expiration = '2h';
 
 module.exports = {
